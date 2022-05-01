@@ -14,12 +14,15 @@ import java.util.Arrays;
 @Setter
 @Entity
 public class Experts extends Users {
-//    @Lob
-//    @Column(name = "photo", columnDefinition = "BLOB")
-//    private byte[] photo;
+
     private Long likes;
     @ManyToOne
     private SubService subService;
+    @OneToOne
+    private Wallet wallet;
+//    @Lob
+//    @Column(name = "photo", columnDefinition = "BLOB")
+//    private byte[] photo;
 
 //    @OneToMany(mappedBy = "experts")
 //    private List<SubService> subService;

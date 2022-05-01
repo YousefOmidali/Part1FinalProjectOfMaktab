@@ -17,6 +17,7 @@ public class SubService {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long id;
+    @Column(unique = true)
     private String description;
     private Long basePrice;
     @ManyToOne

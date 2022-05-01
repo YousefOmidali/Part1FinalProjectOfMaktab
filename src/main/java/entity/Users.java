@@ -1,5 +1,6 @@
 package entity;
 
+import exceptions.InvalidPassword;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,17 +20,23 @@ public class Users {
     @Column(unique = true)
     private String email;
     private String username;
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private Status status;
     private String signUpTime;
 
     public Users(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime) {
+        CheckPassword checkPassword = new CheckPassword();
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.username = username;
-        this.password = password;
+        if (checkPassword.checkPasswordCondition(password))
+            this.password = password;
+        else
+            throw new InvalidPassword("Invalid password! ");
+//        this.password = password;
         this.status = status;
         this.signUpTime = signUpTime;
     }

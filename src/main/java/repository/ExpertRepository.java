@@ -24,4 +24,11 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long>{
             return query.getResultList();
         }
     }
+    public List<Experts> suggestions() {
+        try (var session = sessionFactory.openSession();) {
+            String hql = " FROM entity.Experts e ORDER BY e.likes";
+            var query = session.createQuery(hql, Experts.class);
+            return query.getResultList();
+        }
+    }
 }
