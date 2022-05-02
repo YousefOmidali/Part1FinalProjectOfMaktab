@@ -1,5 +1,6 @@
 package entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,21 +19,16 @@ public class Admin extends Users {
         super(firstname, lastname, email, username, password, status, signUpTime);
     }
 
-
-    public Admin(Long id, String firstname, String lastname, String email, String username, String password, Status status, String signUpTime) {
-        super(id, firstname, lastname, email, username, password, status, signUpTime);
-    }
-
     public String toString() {
         return "Admin{" +
                 "id='" + getId() + '\'' +
-                "username='" + getUsername() + '\'' +
-                "password='" + getPassword() + '\'' +
-                "firstname='" + getFirstname() + '\'' +
-                "lastname='" + getLastname() + '\'' +
-                "email='" + getEmail() + '\'' +
-                "status='" + getStatus() + '\'' +
-                "signUptime='" + getSignUpTime() + '\'' +
+                ", username='" + getUsername() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", firstname='" + getFirstname() + '\'' +
+                ", lastname='" + getLastname() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", status='" + getStatus() + '\'' +
+                ", signUptime='" + getSignUpTime() + '\'' +
                 '}';
     }
 }

@@ -1,11 +1,10 @@
 package entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import exceptions.FileIsTooBig;
+import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Arrays;
 
 @NoArgsConstructor
@@ -16,21 +15,25 @@ import java.util.Arrays;
 public class Experts extends Users {
 
     private Long likes;
+    @Lob
+    @Column(name = "IMAGE")
+    private Blob image;
     @ManyToOne
     private SubService subService;
     @OneToOne
     private Wallet wallet;
-//    @Lob
-//    @Column(name = "photo", columnDefinition = "BLOB")
-//    private byte[] photo;
 
-//    @OneToMany(mappedBy = "experts")
-//    private List<SubService> subService;
 
-    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, byte[] photo, Long likes) {
+    @SneakyThrows
+    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Long likes, SubService subService, Wallet wallet, Blob image) {
         super(firstname, lastname, email, username, password, status, signUpTime);
-//        this.photo = photo;
         this.likes = likes;
+        if ((image.length() / 1024) <= 300)
+            this.image = image;
+        else
+            throw new FileIsTooBig("file is too big! (upto 300kb & jpg)");
+        this.subService = subService;
+        this.wallet = wallet;
     }
 
     public String toString() {
@@ -43,9 +46,9 @@ public class Experts extends Users {
                 "email='" + getEmail() + '\'' +
                 "status='" + getStatus() + '\'' +
                 "signUptime='" + getSignUpTime() + '\'' +
-//                "photo=" + Arrays.toString(photo) +
                 "subService=" + getSubService() +
                 "likes=" + getLikes() +
+                "image=" + getImage() +
                 '}';
     }
 }

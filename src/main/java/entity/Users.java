@@ -36,7 +36,6 @@ public class Users {
             this.password = password;
         else
             throw new InvalidPassword("Invalid password! ");
-//        this.password = password;
         this.status = status;
         this.signUpTime = signUpTime;
     }
