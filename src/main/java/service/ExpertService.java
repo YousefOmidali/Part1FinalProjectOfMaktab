@@ -3,10 +3,8 @@ package service;
 import entity.Experts;
 import repository.ExpertRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class ExpertService {
     ExpertRepository expertRepository = new ExpertRepository();
 

@@ -13,7 +13,9 @@ public class CustomerRepository extends GenericRepositoryImpl<Customer, Long> {
 
     public Customer findById(Long id) {
         try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
             var a = session.find(Customer.class, id);
+            session.getTransaction().commit();
             return a;
         }
     }

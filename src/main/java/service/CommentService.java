@@ -3,10 +3,8 @@ package service;
 import entity.Comment;
 import repository.CommentRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class CommentService {
     CommentRepository commentRepository = new CommentRepository();
 

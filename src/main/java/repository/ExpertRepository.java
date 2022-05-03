@@ -20,7 +20,9 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long> {
 
     public Experts findById(Long id) {
         try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
             var a = session.find(Experts.class, id);
+            session.getTransaction().commit();
             return a;
         }
     }

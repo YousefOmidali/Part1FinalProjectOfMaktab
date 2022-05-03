@@ -18,7 +18,9 @@ public class AdminRepository extends GenericRepositoryImpl<Admin, Long> {
 
     public Admin findById(Long id) {
         try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
             var a = session.find(Admin.class, id);
+            session.getTransaction().commit();
             return a;
         }
     }

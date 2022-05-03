@@ -10,7 +10,9 @@ public class ServiceRepository extends GenericRepositoryImpl<Service, Long> {
 
     public Service findById(Long id) {
         try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
             var a = session.find(Service.class, id);
+            session.getTransaction().commit();
             return a;
         }
     }

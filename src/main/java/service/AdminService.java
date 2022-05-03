@@ -6,7 +6,7 @@ import repository.AdminRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
+
 public class AdminService {
     AdminRepository adminRepository = new AdminRepository();
 

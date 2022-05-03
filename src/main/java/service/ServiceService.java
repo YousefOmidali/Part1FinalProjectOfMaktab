@@ -3,10 +3,8 @@ package service;
 import entity.Service;
 import repository.ServiceRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class ServiceService {
     ServiceRepository serviceRepository = new ServiceRepository();
 

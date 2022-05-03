@@ -3,10 +3,8 @@ package service;
 import entity.Wallet;
 import repository.WalletRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class WalletService {
     WalletRepository walletRepository = new WalletRepository();
 
