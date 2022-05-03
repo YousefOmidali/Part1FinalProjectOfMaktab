@@ -21,7 +21,7 @@ public class Main {
         try {
             expertRepository.save(new Experts("b", "b", "@@", "b", "Yousef78$0"
                     , Status.NEW, String.valueOf(LocalDateTime.now()), 0l, null, null,
-                    BlobProxy.generateProxy(expertRepository.getImage("F:\\Wallpaper\\thiago-gomes-K0YuYMAwCTQ-unsplash.jpg"))));
+                    BlobProxy.generateProxy(expertRepository.getImage("F:\\Wallpaper\\tiger .jpg"))));
         } catch (FileIsTooBig e) {
             System.out.println(e.getMessage());
         }

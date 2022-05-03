@@ -10,9 +10,7 @@ public class WalletRepository extends GenericRepositoryImpl <Wallet, Long>{
 
     public Wallet findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(Wallet.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }

@@ -10,9 +10,7 @@ public class SubServiceRepository extends GenericRepositoryImpl<SubService,Long>
 
     public SubService findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(SubService.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }

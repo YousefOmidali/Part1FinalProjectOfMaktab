@@ -20,7 +20,6 @@ public class SessionFactoryConnection {
                     .addAnnotatedClass(Comment.class)
                     .addAnnotatedClass(Customer.class)
                     .addAnnotatedClass(Experts.class)
-//                    .addAnnotatedClass(Worker.class)
                     .addAnnotatedClass(Order.class)
                     .addAnnotatedClass(Service.class)
                     .addAnnotatedClass(SubService.class)

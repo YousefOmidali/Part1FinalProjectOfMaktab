@@ -22,4 +22,6 @@ public class SubService {
     private Long basePrice;
     @ManyToOne
     private Service service;
+//    @ManyToOne
+//    private Experts experts;
 }

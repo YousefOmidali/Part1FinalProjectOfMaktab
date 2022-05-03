@@ -1,6 +1,7 @@
 package repository;
 
 import entity.Admin;
+import entity.Customer;
 import entity.Experts;
 import exceptions.FileIsTooBig;
 import org.hibernate.SessionFactory;
@@ -19,9 +20,7 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long> {
 
     public Experts findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(Experts.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }
@@ -40,6 +39,17 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long> {
             var query = session.createQuery(hql, Experts.class);
             return query.getResultList();
         }
+    }
+
+    public Experts login(String username, String password) {
+        var session = sessionFactory.openSession();
+        String hql = " FROM entity.Experts a " +
+                " WHERE a.username = :username " +
+                " AND a.password = :password ";
+        var query = session.createQuery(hql, Experts.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.getSingleResult();
     }
 
     public List<Experts> gridSearch(

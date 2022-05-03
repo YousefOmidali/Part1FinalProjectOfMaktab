@@ -10,9 +10,7 @@ public class OrderRepository extends GenericRepositoryImpl<Order, Long> {
 
     public Order findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(Order.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }

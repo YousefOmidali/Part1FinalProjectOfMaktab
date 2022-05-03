@@ -10,9 +10,7 @@ public class CommentRepository extends GenericRepositoryImpl<Comment, Long>{
 
     public Comment findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(Comment.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }

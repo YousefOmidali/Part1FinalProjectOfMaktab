@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Arrays;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +19,8 @@ public class Experts extends Users {
     @Lob
     @Column(name = "IMAGE")
     private Blob image;
-    @ManyToOne
-    private SubService subService;
+    @OneToMany
+    private List<SubService> subService;
     @OneToOne
     private Wallet wallet;
 
@@ -32,7 +33,7 @@ public class Experts extends Users {
             this.image = image;
         else
             throw new FileIsTooBig("file is too big! (upto 300kb & jpg)");
-        this.subService = subService;
+//        this.subService = subService;
         this.wallet = wallet;
     }
 
@@ -46,7 +47,7 @@ public class Experts extends Users {
                 "email='" + getEmail() + '\'' +
                 "status='" + getStatus() + '\'' +
                 "signUptime='" + getSignUpTime() + '\'' +
-                "subService=" + getSubService() +
+//                "subService=" + getSubService() +
                 "likes=" + getLikes() +
                 "image=" + getImage() +
                 '}';

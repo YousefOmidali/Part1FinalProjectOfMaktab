@@ -1,5 +1,6 @@
 package repository;
 
+import entity.Admin;
 import entity.Customer;
 import org.hibernate.SessionFactory;
 
@@ -12,9 +13,7 @@ public class CustomerRepository extends GenericRepositoryImpl<Customer, Long> {
 
     public Customer findById(Long id) {
         try (var session = sessionFactory.openSession()) {
-            session.beginTransaction();
             var a = session.find(Customer.class, id);
-            session.getTransaction().commit();
             return a;
         }
     }
@@ -25,6 +24,16 @@ public class CustomerRepository extends GenericRepositoryImpl<Customer, Long> {
             var query = session.createQuery(hql, Customer.class);
             return query.getResultList();
         }
+    }
+    public Customer login(String username, String password) {
+        var session = sessionFactory.openSession();
+        String hql = " FROM entity.Customer a " +
+                " WHERE a.username = :username " +
+                " AND a.password = :password ";
+        var query = session.createQuery(hql, Customer.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.getSingleResult();
     }
 
     public List<Customer> gridSearch(
