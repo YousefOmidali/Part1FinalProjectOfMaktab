@@ -41,6 +41,7 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long> {
             var query = session.createQuery(hql, Experts.class);
             return query.getResultList();
         }
+
     }
 
     public Experts login(String username, String password) {

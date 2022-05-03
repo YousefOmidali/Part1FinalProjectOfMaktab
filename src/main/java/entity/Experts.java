@@ -26,15 +26,19 @@ public class Experts extends Users {
 
 
     @SneakyThrows
-    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Long likes, SubService subService, Wallet wallet, Blob image) {
+    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Long likes, Blob image, List<SubService> subService, Wallet wallet) {
         super(firstname, lastname, email, username, password, status, signUpTime);
         this.likes = likes;
         if ((image.length() / 1024) <= 300)
             this.image = image;
         else
             throw new FileIsTooBig("file is too big! (upto 300kb & jpg)");
-//        this.subService = subService;
+        this.subService = subService;
         this.wallet = wallet;
+    }
+
+    public Experts(String username, String password) {
+        super(username, password);
     }
 
     public String toString() {

@@ -22,11 +22,14 @@ public class Order {
     private SubService subService;
     @OneToOne
     private Experts expert;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
-    public Order(String signUpTime, Customer customer, SubService subService, Experts expert) {
+    public Order(String signUpTime, Customer customer, SubService subService, Experts expert, OrderStatus orderStatus) {
         this.signUpTime = signUpTime;
         this.customer = customer;
         this.subService = subService;
         this.expert = expert;
+        this.orderStatus = orderStatus;
     }
 }

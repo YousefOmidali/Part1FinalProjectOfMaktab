@@ -27,4 +27,8 @@ public class SubServiceService {
     public List<SubService> findAll() {
         return subServiceRepository.findAll();
     }
+
+    public List<SubService> findAllInAService(Long id) {
+        return subServiceRepository.findAllInAService(id);
+    }
 }

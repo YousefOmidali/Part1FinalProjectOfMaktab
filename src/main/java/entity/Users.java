@@ -40,4 +40,12 @@ public class Users {
         this.signUpTime = signUpTime;
     }
 
+    public Users(String username, String password) {
+        CheckPassword checkPassword = new CheckPassword();
+        this.username = username;
+        if (checkPassword.checkPasswordCondition(password))
+            this.password = password;
+        else
+            throw new InvalidPassword("Invalid password! ");
+    }
 }

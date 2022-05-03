@@ -36,6 +36,10 @@ public class ExpertService {
         return expertRepository.login(username, password);
     }
 
+    public byte[] getImage(String imageLink) {
+        return expertRepository.getImage(imageLink);
+    }
+
     public List<Experts> gridSearch(String firstName,
                                     String lastName,
                                     String email,

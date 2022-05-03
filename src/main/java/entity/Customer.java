@@ -23,6 +23,17 @@ public class Customer extends Users {
 //    @OneToMany(mappedBy = "customer")
 //    private List<Order> orders;
 
+
+    public Customer(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Wallet wallet, List<Comment> comments) {
+        super(firstname, lastname, email, username, password, status, signUpTime);
+        this.wallet = wallet;
+        this.comments = comments;
+    }
+
+    public Customer(String username, String password) {
+        super(username, password);
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
