@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Customer extends Users {
     @OneToOne
     private Wallet wallet;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
     private List<Comment> comments;
 //    @OneToMany(mappedBy = "customer")
 //    private List<Order> orders;

@@ -6,7 +6,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,14 +21,14 @@ public class Experts extends Users {
     @Lob
     @Column(name = "IMAGE")
     private Blob image;
-    @OneToMany
-    private List<SubService> subService;
+    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)
+    private Set<SubService> subService = new HashSet<>();
     @OneToOne
     private Wallet wallet;
 
 
     @SneakyThrows
-    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Long likes, Blob image, List<SubService> subService, Wallet wallet) {
+    public Experts(String firstname, String lastname, String email, String username, String password, Status status, String signUpTime, Long likes, Blob image, Set<SubService> subService, Wallet wallet) {
         super(firstname, lastname, email, username, password, status, signUpTime);
         this.likes = likes;
         if ((image.length() / 1024) <= 300)
@@ -44,16 +46,16 @@ public class Experts extends Users {
     public String toString() {
         return "Expert{" +
                 "id='" + getId() + '\'' +
-                "username='" + getUsername() + '\'' +
-                "password='" + getPassword() + '\'' +
-                "firstname='" + getFirstname() + '\'' +
-                "lastname='" + getLastname() + '\'' +
-                "email='" + getEmail() + '\'' +
-                "status='" + getStatus() + '\'' +
-                "signUptime='" + getSignUpTime() + '\'' +
-//                "subService=" + getSubService() +
-                "likes=" + getLikes() +
-                "image=" + getImage() +
+                ", username='" + getUsername() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", firstname='" + getFirstname() + '\'' +
+                ", lastname='" + getLastname() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", status='" + getStatus() + '\'' +
+                ", signUptime='" + getSignUpTime() + '\'' +
+//               , "subService=" + getSubService() +'\'' +
+                ", likes=" + getLikes() + '\'' +
+                ", image=" + getImage() + '\'' +
                 '}';
     }
 }

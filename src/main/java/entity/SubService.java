@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,13 +17,27 @@ import java.util.List;
 @Entity
 public class SubService {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String description;
     private Long basePrice;
     @ManyToOne
     private Service service;
-//    @ManyToOne
-//    private Experts experts;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "SubServices_Experts",
+            joinColumns = {@JoinColumn(name = "subservice_id")},
+            inverseJoinColumns = {@JoinColumn(name = "experts_id")})
+    private Set<Experts> experts = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "SubService{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", basePrice=" + basePrice +
+                ", service=" + service +
+                '}';
+    }
 }

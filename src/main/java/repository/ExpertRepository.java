@@ -91,7 +91,6 @@ public class ExpertRepository extends GenericRepositoryImpl<Experts, Long> {
 
     public static byte[] getImage(String address) {
         File file = new File(address);
-        System.out.println(file.exists());
         if (file.exists()) {
             try {
                 BufferedImage bufferedImage = ImageIO.read(file);
