@@ -5,6 +5,7 @@ import exceptions.FileIsTooBig;
 import org.hibernate.engine.jdbc.BlobProxy;
 import service.*;
 ;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -72,8 +73,12 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.println("enter your password:");
                 password = scanner.nextLine();
-                customer = customerService.login(username, password);
-                if (customer.getId() != null) {
+                try {
+                    customer = customerService.login(username, password);
+                }catch (NoResultException e ){
+                    System.out.println("wrong username password  OR  You dont have an account ");
+                }
+                if (customer != null) {
                     while (loop) {
                         System.out.println("1.edit account\n2.delete account \n3.charge wallet \n4.have an order? " +
                                 "\n5.add a comment \n6.Exit");
@@ -187,8 +192,12 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.println("enter your password:");
                 password = scanner.nextLine();
-                experts = expertService.login(username, password);
-                if (experts.getId() != null) {
+                try {
+                    experts = expertService.login(username, password);
+                }catch (NoResultException e ){
+                    System.out.println("wrong username password  OR  You dont have an account ");
+                }
+                if (experts != null) {
                     while (loop) {
                         System.out.println("1.edit account\n2.delete account \n3.add a sub service " +
                                 "\n4.show my waiting orders \n5.show my wallet \n6.Exit");
@@ -234,8 +243,6 @@ public class Main {
 //                                experts.getSubService().add(subService);
 //                                expertService.update(experts);
                                 subServiceService.update(subService);
-
-
                                 break;
                             case 4:
                                 orderService.findAllOfAnExpert(experts.getId()).forEach(System.out::println);
@@ -255,8 +262,12 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.println("enter your password:");
                 password = scanner.nextLine();
-                admin = adminService.login(username, password);
-                if (admin.getId() != null) {
+                try {
+                    admin = adminService.login(username, password);
+                }catch (NoResultException e ){
+                    System.out.println("wrong username password  OR  You dont have an account ");
+                }
+                if (admin != null) {
                     while (loop) {
                         System.out.println("1.edit my account \n2.delete my account \n3.Add a service \n4.add sub service " +
                                 "\n5.list of experts \n6.delete an expert \n7.delete a expert from subService " +
