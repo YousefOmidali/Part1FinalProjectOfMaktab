@@ -53,7 +53,7 @@ public class Experts extends Users {
                 ", email='" + getEmail() + '\'' +
                 ", status='" + getStatus() + '\'' +
                 ", signUptime='" + getSignUpTime() + '\'' +
-//               , "subService=" + getSubService() +'\'' +
+                ", subService=" + getSubService() +'\'' +
                 ", likes=" + getLikes() + '\'' +
                 ", image=" + getImage() + '\'' +
                 '}';

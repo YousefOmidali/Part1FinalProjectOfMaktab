@@ -4,15 +4,10 @@ import entity.*;
 import exceptions.FileIsTooBig;
 import org.hibernate.engine.jdbc.BlobProxy;
 import service.*;
-
-import javax.persistence.*;
-import java.nio.file.Path;
-import java.sql.Blob;
+;
+import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Main {
@@ -28,31 +23,30 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Wallet wallet = null;
         Wallet wallet2 = null;
-        Experts experts;
+        Experts experts = null;
         Admin admin = null;
         Service service;
-        SubService subService;
+        SubService subService = null;
         Order order;
         Comment comment;
         String description;
         Integer role1;
-        Integer role2;
+        Integer role2 = null;
         Integer login;
-        Integer menu;
-        Integer likeOrNot;
-        Integer customerOrExpert;
+        Integer menu = null;
+        Integer likeOrNot = null;
+        Integer customerOrExpert = null;
         Boolean loop = true;
-        Long cash;
+        Long cash = null;
         Long likes;
-        Long basePrice;
+        Long basePrice = null;
         Customer customer = null;
-        Long id;
+        Long id = 0L;
         String firstname;
         String lastname;
         String email;
         String username;
         String password;
-        ;
         String image;
 
 
@@ -95,7 +89,11 @@ public class Main {
                                 break;
                             case 3:
                                 System.out.println("enter charge amount:");
-                                cash = scanner.nextLong();
+                                try {
+                                    cash = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 wallet = customer.getWallet();
                                 cash += customer.getWallet().getAmount();
                                 wallet.setAmount(cash);
@@ -104,20 +102,28 @@ public class Main {
                             case 4:
                                 serviceService.findAll().forEach(System.out::println);
                                 System.out.println("enter service id: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 subServiceService.findAllInAService(id).forEach(System.out::println);
                                 System.out.println("enter subService id: ");
                                 subService = subServiceService.findById(scanner.nextLong());
                                 System.out.println("suggested experts:");
                                 subService.getExperts().forEach(System.out::println);
                                 System.out.println("enter expert id: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 experts = expertService.findById(id);
                                 order = new Order(String.valueOf(LocalDateTime.now()), customer, subService, experts
                                         , OrderStatus.NotFinished);
                                 System.out.println("checking your wallet cash ");
                                 cash = customer.getWallet().getAmount();
-                                if (cash > subService.getBasePrice()) {
+                                if (cash >= subService.getBasePrice()) {
                                     System.out.println("you have enough cash");
                                     cash -= subService.getBasePrice();
                                     wallet = customer.getWallet();
@@ -125,7 +131,7 @@ public class Main {
                                     walletService.update(wallet);
                                     wallet2 = experts.getWallet();
                                     cash = wallet2.getAmount();
-                                    cash+= subService.getBasePrice();
+                                    cash += subService.getBasePrice();
                                     wallet2.setAmount(cash);
                                     walletService.update(wallet2);
                                     orderService.save(order);
@@ -134,7 +140,11 @@ public class Main {
                                 break;
                             case 5:
                                 System.out.println("enter order id: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 order = orderService.findById(id);
                                 if (order.getOrderStatus() == OrderStatus.Finished) {
                                     scanner.nextLine();
@@ -143,7 +153,11 @@ public class Main {
                                     comment = new Comment(null, description, customer, order);
                                     commentService.save(comment);
                                     System.out.println("do you want to like the expert? \n1.Yes  2. No");
-                                    likeOrNot = scanner.nextInt();
+                                    try {
+                                        likeOrNot = scanner.nextInt();
+                                    } catch (InputMismatchException e) {
+                                        System.out.println("wrong input! ");
+                                    }
                                     if (likeOrNot == 1) {
                                         experts = order.getExpert();
                                         likes = experts.getLikes();
@@ -170,7 +184,11 @@ public class Main {
                     while (loop) {
                         System.out.println("1.edit account\n2.delete account \n3.add a sub service " +
                                 "\n4.show my waiting orders \n5.show my wallet \n6.Exit");
-                        menu = scanner.nextInt();
+                        try {
+                            menu = scanner.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("wrong input! ");
+                        }
                         switch (menu) {
                             case 1:
                                 scanner.nextLine();
@@ -191,10 +209,18 @@ public class Main {
                             case 3:
                                 serviceService.findAll().forEach(System.out::println);
                                 System.out.println("enter id of service: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 subServiceService.findAllInAService(id).forEach(System.out::println);
                                 System.out.println("enter id of subService: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 subService = subServiceService.findById(id);
                                 subService.getExperts().add(experts);
 //                                experts.getSubService().add(subService);
@@ -225,9 +251,13 @@ public class Main {
                 if (admin.getId() != null) {
                     while (loop) {
                         System.out.println("1.edit my account \n2.delete my account \n3.Add a service \n4.add sub service " +
-                                "\n5.list of experts \n6.delete an expert \n7.delete a subService from expert" +
-                                "\n8.gridSearch \n9.set an order finished tag \n10.Exit ");
-                        menu = scanner.nextInt();
+                                "\n5.list of experts \n6.delete an expert \n7.delete a expert from subService " +
+                                "\n8.gridSearch \n9.set an order finished tag \n10.list of all customers \n11.Exit ");
+                        try {
+                            menu = scanner.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("wrong input! ");
+                        }
                         switch (menu) {
                             case 1:
                                 scanner.nextLine();
@@ -256,29 +286,51 @@ public class Main {
                                 System.out.println("enter description:");
                                 description = scanner.nextLine();
                                 System.out.println("enter service id: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 service = serviceService.findById(id);
                                 System.out.println("enter basePrice: ");
-                                basePrice = scanner.nextLong();
-                                subServiceService.save(new SubService(null, description, basePrice
-                                        , service, new HashSet<>())); //****************************************************
+                                try {
+                                    basePrice = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
+                                try {
+                                    subServiceService.save(new SubService(null, description, basePrice
+                                            , service, new HashSet<>()));
+                                } catch (PersistenceException e) {
+                                    System.out.println("Duplicate subService!");
+                                }
+
                                 break;
                             case 5:
                                 expertService.findAll().forEach(System.out::println);
                                 break;
                             case 6:
                                 System.out.println("enter expert id: ");
-                                id = scanner.nextLong();
-                                experts = expertService.findById(id);
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 expertService.deleteById(id);
                                 break;
                             case 7:
-                                System.out.println("enter expert id: ");
-                                id = scanner.nextLong();
-                                experts = expertService.findById(id);
-                                System.out.println("enter sub service id: ");
-                                subService = subServiceService.findById(id);
-                                experts.getSubService().remove(subService);
+                                System.out.println("enter subService id: ");
+                                try {
+                                    id = scanner.nextLong();
+                                    subService = subServiceService.findById(id);
+                                    System.out.println("enter expert id: ");
+                                    id = scanner.nextLong();
+                                    experts = expertService.findById(id);
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
+                                subService.getExperts().remove(experts);
+                                subServiceService.update(subService);
                                 break;
                             case 8:
                                 scanner.nextLine();
@@ -291,7 +343,12 @@ public class Main {
                                 System.out.println("enter username: ");
                                 username = scanner.nextLine();
                                 System.out.println("1.Customer    2.Expert");
-                                customerOrExpert = scanner.nextInt();
+                                try {
+                                    customerOrExpert = scanner.nextInt();
+
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 if (customerOrExpert == 1) {
                                     customerService.gridSearch(firstname, lastname, email, username)
                                             .forEach(System.out::println);
@@ -303,12 +360,19 @@ public class Main {
                                 break;
                             case 9:
                                 System.out.println("enter order id: ");
-                                id = scanner.nextLong();
+                                try {
+                                    id = scanner.nextLong();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("wrong input! ");
+                                }
                                 order = orderService.findById(id);
                                 order.setOrderStatus(OrderStatus.Finished);
                                 orderService.update(order);
                                 break;
                             case 10:
+                                customerService.findAll().forEach(System.out::println);
+                                break;
+                            case 11:
                                 loop = false;
                                 break;
                         }
@@ -318,7 +382,11 @@ public class Main {
 
         } else if (role1 == 2) {
             System.out.println("what are you ? \n1.customer    2.expert    3.Admin");
-            role2 = scanner.nextInt();
+            try {
+                role2 = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("wrong input! ");
+            }
             if (role2 == 1) {
                 scanner.nextLine();
                 System.out.println("enter your first name:");
@@ -332,7 +400,11 @@ public class Main {
                 System.out.println("enter your password:");
                 password = scanner.nextLine();
                 System.out.println("enter amount you want to put in your wallet:");
-                cash = scanner.nextLong();
+                try {
+                    cash = scanner.nextLong();
+                } catch (InputMismatchException e) {
+                    System.out.println("wrong input! ");
+                }
                 wallet = new Wallet(null, cash);
                 walletService.save(wallet);
                 customer = new Customer(firstname, lastname, email, username, password, Status.NEW
