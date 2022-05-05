@@ -30,9 +30,9 @@ public class Main {
         Order order;
         Comment comment;
         String description;
-        Integer role1;
+        Integer role1 = null;
         Integer role2 = null;
-        Integer login;
+        Integer login = null;
         Integer menu = null;
         Integer likeOrNot = null;
         Integer customerOrExpert = null;
@@ -54,10 +54,18 @@ public class Main {
 //                , new Wallet(null, 100L), new ArrayList<>());
 //        customerService.save(customer);
         System.out.println("1.Login \n2.signUp ");
-        role1 = scanner.nextInt();
+        try {
+            role1 = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("wrong input! ");
+        }
         if (role1 == 1) {
             System.out.println("1.Customer \n2.Expert \n3.Admin ");
-            login = scanner.nextInt();
+            try {
+                login = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("wrong input! ");
+            }
             if (login == 1) {
                 scanner.nextLine();
                 System.out.println("enter your username:");
